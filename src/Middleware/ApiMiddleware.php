@@ -1,10 +1,10 @@
 <?php
 
-namespace KarwanKhalid\RestAPI\Middleware;
+namespace karwan\restapi-laravel\Middleware;
 
 use Closure;
-use KarwanKhalid\RestAPI\ApiResponse;
-use KarwanKhalid\RestAPI\Exceptions\UnauthorizedException;
+use karwan\restapi-laravel\ApiResponse;
+use karwan\restapi-laravel\Exceptions\UnauthorizedException;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 

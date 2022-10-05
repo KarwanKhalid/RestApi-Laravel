@@ -1,9 +1,9 @@
 <?php
 
-namespace KarwanKhalid\RestAPI\Tests\Controllers;
+namespace karwan\restapi-laravel\Tests\Controllers;
 
-use KarwanKhalid\RestAPI\ApiController;
-use KarwanKhalid\RestAPI\Tests\Models\DummyComment;
+use karwan\restapi-laravel\ApiController;
+use karwan\restapi-laravel\Tests\Models\DummyComment;
 
 class CommentController extends ApiController
 {

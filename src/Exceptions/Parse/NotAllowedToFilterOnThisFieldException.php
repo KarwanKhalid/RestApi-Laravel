@@ -1,8 +1,8 @@
 <?php
-namespace KarwanKhalid\RestAPI\Exceptions\Parse;
+namespace karwan\restapi-laravel\Exceptions\Parse;
 
-use KarwanKhalid\RestAPI\Exceptions\ApiException;
-use KarwanKhalid\RestAPI\Exceptions\ErrorCodes;
+use karwan\restapi-laravel\Exceptions\ApiException;
+use karwan\restapi-laravel\Exceptions\ErrorCodes;
 
 class NotAllowedToFilterOnThisFieldException extends ApiException
 {

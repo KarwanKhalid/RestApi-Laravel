@@ -21,8 +21,8 @@ if [ ! -f "laravel/composer.json" ] ; then
 
     php -r "
         \$arr = json_decode(file_get_contents(\"composer.json\"), true);
-        \$arr[\"autoload\"][\"psr-4\"][\"KarwanKhalid\\\\RestAPI\\\\\"] = \"laravel-rest-api/src\";
-        \$arr[\"autoload\"][\"psr-4\"][\"KarwanKhalid\\\\RestAPI\\\\Tests\\\\\"] = \"laravel-rest-api/tests\";
+        \$arr[\"autoload\"][\"psr-4\"][\"karwan\\\\restapi-laravel\\\\\"] = \"laravel-rest-api/src\";
+        \$arr[\"autoload\"][\"psr-4\"][\"karwan\\\\restapi-laravel\\\\Tests\\\\\"] = \"laravel-rest-api/tests\";
         file_put_contents(\"composer.json\", json_encode(\$arr));
     "
 else
@@ -30,7 +30,7 @@ else
 fi
 
 rm -rf laravel-rest-api
-git clone https://github.com/KarwanKhalid/laravel-rest-api
+git clone https://github.com/karwan/laravel-rest-api
 git checkout master
 composer du
 cd .. || exit

@@ -1,22 +1,22 @@
 <?php
 
-namespace KarwanKhalid\RestAPI\Tests;
+namespace karwan\restapi-laravel\Tests;
 
-use KarwanKhalid\RestAPI\Facades\ApiRoute;
-use KarwanKhalid\RestAPI\Routing\ApiRouter;
-use KarwanKhalid\RestAPI\Tests\Controllers\CommentController;
-use KarwanKhalid\RestAPI\Tests\Controllers\PostController;
-use KarwanKhalid\RestAPI\Tests\Controllers\UserController;
-use KarwanKhalid\RestAPI\Tests\Models\DummyComment;
-use KarwanKhalid\RestAPI\Tests\Models\DummyPhone;
-use KarwanKhalid\RestAPI\Tests\Models\DummyPost;
-use KarwanKhalid\RestAPI\Tests\Models\DummyUser;
+use karwan\restapi-laravel\Facades\ApiRoute;
+use karwan\restapi-laravel\Routing\ApiRouter;
+use karwan\restapi-laravel\Tests\Controllers\CommentController;
+use karwan\restapi-laravel\Tests\Controllers\PostController;
+use karwan\restapi-laravel\Tests\Controllers\UserController;
+use karwan\restapi-laravel\Tests\Models\DummyComment;
+use karwan\restapi-laravel\Tests\Models\DummyPhone;
+use karwan\restapi-laravel\Tests\Models\DummyPost;
+use karwan\restapi-laravel\Tests\Models\DummyUser;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 
 /**
  * Class TestCase
- * @package KarwanKhalid\RestAPI\Tests
+ * @package karwan\restapi-laravel\Tests
  */
 class  TestCase extends \Illuminate\Foundation\Testing\TestCase
 {

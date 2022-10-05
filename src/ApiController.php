@@ -1,15 +1,15 @@
 <?php
 
-namespace KarwanKhalid\RestAPI;
+namespace karwan\restapi-laravel;
 
-use KarwanKhalid\RestAPI\Exceptions\Parse\NotAllowedToFilterOnThisFieldException;
-use KarwanKhalid\RestAPI\Exceptions\ResourceNotFoundException;
-use KarwanKhalid\RestAPI\Tests\Models\DummyUser;
+use karwan\restapi-laravel\Exceptions\Parse\NotAllowedToFilterOnThisFieldException;
+use karwan\restapi-laravel\Exceptions\ResourceNotFoundException;
+use karwan\restapi-laravel\Tests\Models\DummyUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use KarwanKhalid\RestAPI\ExtendedRelations\BelongsToMany;
+use karwan\restapi-laravel\ExtendedRelations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\Relation;

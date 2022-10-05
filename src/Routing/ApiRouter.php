@@ -1,10 +1,10 @@
 <?php
 
-namespace KarwanKhalid\RestAPI\Routing;
+namespace karwan\restapi-laravel\Routing;
 
 use Closure;
-use KarwanKhalid\RestAPI\Exceptions\ApiException;
-use KarwanKhalid\RestAPI\Middleware\ApiMiddleware;
+use karwan\restapi-laravel\Exceptions\ApiException;
+use karwan\restapi-laravel\Middleware\ApiMiddleware;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Routing\ResourceRegistrar;
@@ -25,8 +25,8 @@ class ApiRouter extends Router
      */
     public function resource($name, $controller, array $options = [])
     {
-        if ($this->container && $this->container->bound('KarwanKhalid\RestAPI\Routing\ApiResourceRegistrar')) {
-            $registrar = $this->container->make('KarwanKhalid\RestAPI\Routing\ApiResourceRegistrar');
+        if ($this->container && $this->container->bound('karwan\restapi-laravel\Routing\ApiResourceRegistrar')) {
+            $registrar = $this->container->make('karwan\restapi-laravel\Routing\ApiResourceRegistrar');
         }
         else {
             $registrar = new ResourceRegistrar($this);
@@ -94,7 +94,7 @@ class ApiRouter extends Router
 //             $routes->add($route);
 
             // Options route
-           // $route = $this->createRoute(['OPTIONS'], $uri, ['uses' => '\KarwanKhalid\RestAPI\Routing\ApiRouter@returnRoute']);
+           // $route = $this->createRoute(['OPTIONS'], $uri, ['uses' => '\karwan\restapi-laravel\Routing\ApiRouter@returnRoute']);
 
 //             $route->middleware(ApiMiddleware::class);
 

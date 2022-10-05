@@ -1,8 +1,8 @@
 <?php
 
-namespace KarwanKhalid\RestAPI;
+namespace karwan\restapi-laravel;
 
-use KarwanKhalid\RestAPI\Exceptions\ApiException;
+use karwan\restapi-laravel\Exceptions\ApiException;
 
 class ApiResponse
 {

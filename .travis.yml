@@ -12,15 +12,15 @@ cache:
 install:
   # specify the laravel service providers to insert
   - export PACKAGE_PROVIDER="
-    KarwanKhalid\\\\RestAPI\\\\Providers\\\\ApiServiceProvider::class"
+    karwan\\\\restapi-laravel\\\\Providers\\\\ApiServiceProvider::class"
   - export FACADES="
-    'ApiRoute' => KarwanKhalid\\\\RestAPI\\\\Facades\\\\ApiRoute::class"
+    'ApiRoute' => karwan\\\\restapi-laravel\\\\Facades\\\\ApiRoute::class"
   - export DB_HOST="localhost"
   - export DB_DATABASE="homestead_test"
   - export DB_USERNAME="root"
   - export DB_PASSWORD=""
   #specify the package to test
-  - export PACKAGE_NAME=KarwanKhalid/laravel-rest-api
+  - export PACKAGE_NAME=karwan/laravel-rest-api
   #run the setup script
   - curl -s https://raw.githubusercontent.com/KarwanKhalid/laravel-rest-api/master/setup.sh | bash
   - mysql -e 'create database homestead_test;'

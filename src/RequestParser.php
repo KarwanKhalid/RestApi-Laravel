@@ -1,12 +1,12 @@
 <?php
 
-namespace KarwanKhalid\RestAPI;
+namespace karwan\restapi-laravel;
 
-use KarwanKhalid\RestAPI\Exceptions\Parse\InvalidLimitException;
-use KarwanKhalid\RestAPI\Exceptions\Parse\InvalidFilterDefinitionException;
-use KarwanKhalid\RestAPI\Exceptions\Parse\InvalidOrderingDefinitionException;
-use KarwanKhalid\RestAPI\Exceptions\Parse\MaxLimitException;
-use KarwanKhalid\RestAPI\Exceptions\Parse\NotAllowedToFilterOnThisFieldException;
+use karwan\restapi-laravel\Exceptions\Parse\InvalidLimitException;
+use karwan\restapi-laravel\Exceptions\Parse\InvalidFilterDefinitionException;
+use karwan\restapi-laravel\Exceptions\Parse\InvalidOrderingDefinitionException;
+use karwan\restapi-laravel\Exceptions\Parse\MaxLimitException;
+use karwan\restapi-laravel\Exceptions\Parse\NotAllowedToFilterOnThisFieldException;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;

@@ -1,9 +1,9 @@
 <?php
 
-namespace KarwanKhalid\RestAPI\Tests\Controllers;
+namespace karwan\restapi-laravel\Tests\Controllers;
 
-use KarwanKhalid\RestAPI\ApiController;
-use KarwanKhalid\RestAPI\Tests\Models\DummyPost;
+use karwan\restapi-laravel\ApiController;
+use karwan\restapi-laravel\Tests\Models\DummyPost;
 
 class PostController extends ApiController
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace KarwanKhalid\RestAPI\Providers;
+namespace karwan\restapi-laravel\Providers;
 
-use KarwanKhalid\RestAPI\Handlers\ApiExceptionHandler;
-use KarwanKhalid\RestAPI\Routing\ApiResourceRegistrar;
-use KarwanKhalid\RestAPI\Routing\ApiRouter;
+use karwan\restapi-laravel\Handlers\ApiExceptionHandler;
+use karwan\restapi-laravel\Routing\ApiResourceRegistrar;
+use karwan\restapi-laravel\Routing\ApiRouter;
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Routing\RouteCollection;

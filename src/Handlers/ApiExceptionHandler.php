@@ -1,15 +1,15 @@
 <?php
 
-namespace KarwanKhalid\RestAPI\Handlers;
+namespace karwan\restapi-laravel\Handlers;
 
 use App\Exceptions\Handler;
-use KarwanKhalid\RestAPI\ApiResponse;
-use KarwanKhalid\RestAPI\Exceptions\ApiException;
-use KarwanKhalid\RestAPI\Exceptions\Parse\UnknownFieldException;
-use KarwanKhalid\RestAPI\Exceptions\UnauthenticatedException;
-use KarwanKhalid\RestAPI\Exceptions\UnauthenticationException;
-use KarwanKhalid\RestAPI\Exceptions\UnauthorizedException;
-use KarwanKhalid\RestAPI\Exceptions\ValidationException;
+use karwan\restapi-laravel\ApiResponse;
+use karwan\restapi-laravel\Exceptions\ApiException;
+use karwan\restapi-laravel\Exceptions\Parse\UnknownFieldException;
+use karwan\restapi-laravel\Exceptions\UnauthenticatedException;
+use karwan\restapi-laravel\Exceptions\UnauthenticationException;
+use karwan\restapi-laravel\Exceptions\UnauthorizedException;
+use karwan\restapi-laravel\Exceptions\ValidationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;

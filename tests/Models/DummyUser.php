@@ -1,8 +1,8 @@
 <?php
 
-namespace KarwanKhalid\RestAPI\Tests\Models;
+namespace karwan\restapi-laravel\Tests\Models;
 
-use KarwanKhalid\RestAPI\ApiModel;
+use karwan\restapi-laravel\ApiModel;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -35,7 +35,7 @@ class DummyUser extends ApiModel
      */
     public function phone()
     {
-        return $this->hasOne('KarwanKhalid\RestAPI\Tests\Models\DummyPhone', 'user_id', 'id');
+        return $this->hasOne('karwan\restapi-laravel\Tests\Models\DummyPhone', 'user_id', 'id');
     }
 
     /**
@@ -43,7 +43,7 @@ class DummyUser extends ApiModel
      */
     public function posts()
     {
-        return $this->hasMany('KarwanKhalid\RestAPI\Tests\Models\DummyPost', 'user_id', 'id');
+        return $this->hasMany('karwan\restapi-laravel\Tests\Models\DummyPost', 'user_id', 'id');
     }
 
     /**
@@ -51,6 +51,6 @@ class DummyUser extends ApiModel
      */
     public function comments()
     {
-        return $this->hasMany('KarwanKhalid\RestAPI\Tests\Models\DummyComment', 'user_id', 'id');
+        return $this->hasMany('karwan\restapi-laravel\Tests\Models\DummyComment', 'user_id', 'id');
     }
 }

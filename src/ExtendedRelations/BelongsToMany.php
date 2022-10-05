@@ -1,6 +1,6 @@
 <?php
 
-namespace KarwanKhalid\RestAPI\ExtendedRelations;
+namespace karwan\restapi-laravel\ExtendedRelations;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany as LaravelBelongsToMany;
 
 class BelongsToMany extends LaravelBelongsToMany

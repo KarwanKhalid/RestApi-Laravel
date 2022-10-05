@@ -1,8 +1,8 @@
 <?php
 
-namespace KarwanKhalid\RestAPI\Facades;
+namespace karwan\restapi-laravel\Facades;
 
-use KarwanKhalid\RestAPI\Routing\ApiRouter;
+use karwan\restapi-laravel\Routing\ApiRouter;
 use Illuminate\Support\Facades\Facade;
 
 class ApiRoute extends Facade

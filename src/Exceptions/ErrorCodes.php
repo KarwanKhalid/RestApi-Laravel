@@ -1,6 +1,6 @@
 <?php
 
-namespace KarwanKhalid\RestAPI\Exceptions;
+namespace karwan\restapi-laravel\Exceptions;
 
 class ErrorCodes
 {

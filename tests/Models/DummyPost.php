@@ -1,8 +1,8 @@
 <?php
 
-namespace KarwanKhalid\RestAPI\Tests\Models;
+namespace karwan\restapi-laravel\Tests\Models;
 
-use KarwanKhalid\RestAPI\ApiModel;
+use karwan\restapi-laravel\ApiModel;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -34,7 +34,7 @@ class DummyPost extends ApiModel
      */
     public function comments()
     {
-        return $this->hasMany('KarwanKhalid\RestAPI\Tests\Models\DummyComment');
+        return $this->hasMany('karwan\restapi-laravel\Tests\Models\DummyComment');
     }
 
 }

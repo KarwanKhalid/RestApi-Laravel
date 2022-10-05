@@ -1,5 +1,5 @@
 {
-    "name": "karwan/laravel-rest-api",
+    "name": "karwan/restapi-laravel",
     "description": "Powerful RestAPI plugin for Laravel framework",
     "type": "library",
     "require": {
@@ -8,8 +8,8 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "KarwanKhalid\\RestAPI\\": "src",
-            "KarwanKhalid\\RestAPI\\Tests\\": "tests"
+            "karwan\\restapi-laravel\\": "src",
+            "karwan\\restapi-laravel\\Tests\\": "tests"
         }
     },
     "authors": [

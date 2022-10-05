@@ -4,7 +4,7 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use KarwanKhalid\RestAPI\Tests\TestCase;
+use karwan\restapi-laravel\Tests\TestCase;
 
 class PaginationTest extends TestCase
 {

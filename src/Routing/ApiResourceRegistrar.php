@@ -1,6 +1,6 @@
 <?php
 
-namespace KarwanKhalid\RestAPI\Routing;
+namespace karwan\restapi-laravel\Routing;
 
 use Illuminate\Routing\ResourceRegistrar;
 use Illuminate\Support\Str;

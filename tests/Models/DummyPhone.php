@@ -1,8 +1,8 @@
 <?php
 
-namespace KarwanKhalid\RestAPI\Tests\Models;
+namespace karwan\restapi-laravel\Tests\Models;
 
-use KarwanKhalid\RestAPI\ApiModel;
+use karwan\restapi-laravel\ApiModel;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 

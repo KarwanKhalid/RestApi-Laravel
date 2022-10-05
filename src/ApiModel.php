@@ -1,10 +1,10 @@
-<?php namespace KarwanKhalid\RestAPI;
+<?php namespace karwan\restapi-laravel;
 
 use Carbon\Carbon;
 use Closure;
 use DateTimeInterface;
-use KarwanKhalid\RestAPI\Exceptions\RelatedResourceNotFoundException;
-use KarwanKhalid\RestAPI\Exceptions\ResourceNotFoundException;
+use karwan\restapi-laravel\Exceptions\RelatedResourceNotFoundException;
+use karwan\restapi-laravel\Exceptions\ResourceNotFoundException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
