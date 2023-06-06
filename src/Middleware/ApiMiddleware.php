@@ -1,11 +1,11 @@
 <?php
 
-namespace karwan\restapi-laravel\Middleware;
+namespace Karwan\RestAPI\Middleware;
 
 use Closure;
-use karwan\restapi-laravel\ApiResponse;
-use karwan\restapi-laravel\Exceptions\UnauthorizedException;
 use Illuminate\Support\Str;
+use Karwan\RestAPI\ApiResponse;
+use Karwan\RestAPI\Exceptions\UnauthorizedException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ApiMiddleware
@@ -25,7 +25,6 @@ class ApiMiddleware
                 ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
                 ->header('Access-Control-Allow-Headers', implode(',', config('api.cors_headers')));
         }
-
 
         return $response;
     }

@@ -1,10 +1,6 @@
 <?php
 
-use karwan\restapi-laravel\Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Routing\Router;
+use Karwan\RestAPI\Tests\TestCase;
 
 class DummyUserTest extends TestCase
 {
@@ -71,7 +67,7 @@ class DummyUserTest extends TestCase
         $createFactory = \Illuminate\Database\Eloquent\Factory::construct(\Faker\Factory::create(),
             base_path() . '/laravel-rest-api/tests/Factories');
 
-        $userId = $createFactory->of(\karwan\restapi-laravel\Tests\Models\DummyUser::class)->create();
+        $userId = $createFactory->of(\Karwan\RestAPI\Tests\Models\DummyUser::class)->create();
 
         // Use "filters" to modify The result
         $response = $this->call('GET', '/dummyUser',
@@ -84,7 +80,7 @@ class DummyUserTest extends TestCase
         $response = $this->call('GET', '/dummyUser',
             [
                 'fields' => "id,name",
-                'filters' => 'name lk "%'.$userId->name.'%"',
+                'filters' => 'name lk "%' . $userId->name . '%"',
             ]);
         $this->assertEquals(200, $response->status());
     }
@@ -105,7 +101,7 @@ class DummyUserTest extends TestCase
         // Define order of result
         $response = $this->call('GET', '/dummyUser',
             [
-               'order' => "id desc",
+                'order' => "id desc",
             ]);
 
         $this->assertEquals(200, $response->status());
@@ -121,27 +117,27 @@ class DummyUserTest extends TestCase
 
     public function testUserShowFunction()
     {
-        $user = \karwan\restapi-laravel\Tests\Models\DummyUser::all()->random();
-        $response = $this->call('GET', '/dummyUser/'.$user->id);
+        $user = \Karwan\RestAPI\Tests\Models\DummyUser::all()->random();
+        $response = $this->call('GET', '/dummyUser/' . $user->id);
 
         $this->assertEquals(200, $response->status());
     }
 
     public function testShowCommentsByUserRelationsEndpoint()
     {
-        $user = \karwan\restapi-laravel\Tests\Models\DummyUser::all()->random();
+        $user = \Karwan\RestAPI\Tests\Models\DummyUser::all()->random();
 
-        $post = \karwan\restapi-laravel\Tests\Models\DummyPost::all()->random();
+        $post = \Karwan\RestAPI\Tests\Models\DummyPost::all()->random();
 
         $createFactory = \Illuminate\Database\Eloquent\Factory::construct(\Faker\Factory::create(),
             base_path() . '/laravel-rest-api/tests/Factories');
 
-        $comment = $createFactory->of(\karwan\restapi-laravel\Tests\Models\DummyComment::class)->create([
+        $comment = $createFactory->of(\Karwan\RestAPI\Tests\Models\DummyComment::class)->create([
             'comment' => "Dummy Comments",
             'user_id' => $user->id,
-            'post_id' => $post->id
+            'post_id' => $post->id,
         ]);
-        $response = $this->call('GET', '/dummyUser/'.$user->id.'/comments');
+        $response = $this->call('GET', '/dummyUser/' . $user->id . '/comments');
 
         $responseContent = json_decode($response->getContent(), true);
 
@@ -153,19 +149,19 @@ class DummyUserTest extends TestCase
     public function testShowPostsByUserRelationsEndpoint()
     {
         //region Insert Dummy Data
-        $user = \karwan\restapi-laravel\Tests\Models\DummyUser::all()->random();
+        $user = \Karwan\RestAPI\Tests\Models\DummyUser::all()->random();
 
         $createFactory = \Illuminate\Database\Eloquent\Factory::construct(\Faker\Factory::create(),
             base_path() . '/laravel-rest-api/tests/Factories');
 
-        $createFactory->of(\karwan\restapi-laravel\Tests\Models\DummyPost::class)->create([
+        $createFactory->of(\Karwan\RestAPI\Tests\Models\DummyPost::class)->create([
             'post' => "dummy POst",
             'user_id' => $user->id,
         ]);
 
         //endregion
 
-        $response = $this->call('GET', '/dummyUser/'.$user->id.'/posts');
+        $response = $this->call('GET', '/dummyUser/' . $user->id . '/posts');
 
         $responseContent = json_decode($response->getContent(), true);
 
@@ -180,7 +176,7 @@ class DummyUserTest extends TestCase
             [
                 'name' => "Dummy User",
                 'email' => "dummy@test.com",
-                'age' => 25
+                'age' => 25,
             ]);
         $this->assertEquals(200, $response->status());
 
@@ -188,9 +184,9 @@ class DummyUserTest extends TestCase
 
     public function testUserUpdate()
     {
-        $user = \karwan\restapi-laravel\Tests\Models\DummyUser::all()->random();
+        $user = \Karwan\RestAPI\Tests\Models\DummyUser::all()->random();
 
-        $response = $this->call('PUT', '/dummyUser/'.$user->id,
+        $response = $this->call('PUT', '/dummyUser/' . $user->id,
             [
                 'name' => "Dummy1 User",
                 'email' => "dummy2@test.com",
@@ -206,9 +202,9 @@ class DummyUserTest extends TestCase
      */
     public function testUserDelete()
     {
-        $user = \karwan\restapi-laravel\Tests\Models\DummyUser::all()->random();
+        $user = \Karwan\RestAPI\Tests\Models\DummyUser::all()->random();
 
-        $response = $this->call('DELETE', '/dummyUser/'.$user->id);
+        $response = $this->call('DELETE', '/dummyUser/' . $user->id);
 
         $this->assertEquals(200, $response->status());
     }

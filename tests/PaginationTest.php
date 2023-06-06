@@ -1,10 +1,7 @@
 
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use karwan\restapi-laravel\Tests\TestCase;
+use Karwan\RestAPI\Tests\TestCase;
 
 class PaginationTest extends TestCase
 {
@@ -21,7 +18,7 @@ class PaginationTest extends TestCase
             [
                 'order' => 'id asc',
                 'offset' => '5',
-                'limit' => '2'
+                'limit' => '2',
             ]);
         $this->assertEquals(200, $response->status());
 
@@ -30,7 +27,7 @@ class PaginationTest extends TestCase
             [
                 'order' => 'id asc',
                 'offset' => '1',
-                'limit' => '1'
+                'limit' => '1',
             ]);
         $this->assertEquals(200, $response->status());
 
@@ -39,7 +36,7 @@ class PaginationTest extends TestCase
             [
                 'order' => 'id asc',
                 'offset' => '5',
-                'limit' => '-2'
+                'limit' => '-2',
             ]);
         $this->assertNotEquals(200, $response->status());
     }

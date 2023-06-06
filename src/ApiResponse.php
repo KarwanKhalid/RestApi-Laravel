@@ -1,8 +1,8 @@
 <?php
 
-namespace karwan\restapi-laravel;
+namespace Karwan\RestAPI;
 
-use karwan\restapi-laravel\Exceptions\ApiException;
+use Karwan\RestAPI\Exceptions\ApiException;
 
 class ApiResponse
 {
@@ -75,11 +75,11 @@ class ApiResponse
             $response["message"] = $message;
         }
 
-        if ($data !== null && is_array($data)){
+        if ($data !== null && is_array($data)) {
             $response["data"] = $data;
         }
 
-        if ($meta !== null && is_array($meta)){
+        if ($meta !== null && is_array($meta)) {
             $response["meta"] = $meta;
         }
 

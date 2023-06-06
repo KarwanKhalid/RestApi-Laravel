@@ -1,6 +1,6 @@
 <?php
 
-namespace karwan\restapi-laravel\Exceptions;
+namespace Karwan\RestAPI\Exceptions;
 
 class ValidationException extends ApiException
 {

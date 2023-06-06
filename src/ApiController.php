@@ -1,23 +1,21 @@
 <?php
 
-namespace karwan\restapi-laravel;
+namespace Karwan\RestAPI;
 
-use karwan\restapi-laravel\Exceptions\Parse\NotAllowedToFilterOnThisFieldException;
-use karwan\restapi-laravel\Exceptions\ResourceNotFoundException;
-use karwan\restapi-laravel\Tests\Models\DummyUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use karwan\restapi-laravel\ExtendedRelations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
+use Karwan\RestAPI\Exceptions\Parse\NotAllowedToFilterOnThisFieldException;
+use Karwan\RestAPI\Exceptions\ResourceNotFoundException;
+use Karwan\RestAPI\ExtendedRelations\BelongsToMany;
 
 class ApiController extends \Illuminate\Routing\Controller
+
 {
 
     /**
@@ -61,7 +59,6 @@ class ApiController extends \Illuminate\Routing\Controller
      * @var Builder
      */
     private $query = null;
-
 
     /**
      * Form request to validate index request
@@ -199,7 +196,7 @@ class ApiController extends \Illuminate\Routing\Controller
         $object->fill(request()->all());
 
         // Run hook if exists
-        if(method_exists($this, 'storing')) {
+        if (method_exists($this, 'storing')) {
             $object = call_user_func([$this, 'storing'], $object);
         }
 
@@ -209,11 +206,11 @@ class ApiController extends \Illuminate\Routing\Controller
 
         \DB::commit();
 
-        if(method_exists($this, 'stored')) {
+        if (method_exists($this, 'stored')) {
             call_user_func([$this, 'stored'], $object);
         }
 
-        return ApiResponse::make("Resource created successfully", [ "id" => $object->id ], $meta);
+        return ApiResponse::make("Resource created successfully", ["id" => $object->id], $meta);
     }
 
     public function update(...$args)
@@ -237,7 +234,7 @@ class ApiController extends \Illuminate\Routing\Controller
 
         $object->fill(request()->all());
 
-        if(method_exists($this, 'updating')) {
+        if (method_exists($this, 'updating')) {
             $object = call_user_func([$this, 'updating'], $object);
         }
 
@@ -247,11 +244,11 @@ class ApiController extends \Illuminate\Routing\Controller
 
         \DB::commit();
 
-        if(method_exists($this, 'updated')) {
+        if (method_exists($this, 'updated')) {
             call_user_func([$this, 'updated'], $object);
         }
 
-        return ApiResponse::make("Resource updated successfully", [ "id" => $object->id ], $meta);
+        return ApiResponse::make("Resource updated successfully", ["id" => $object->id], $meta);
     }
 
     public function destroy(...$args)
@@ -273,7 +270,7 @@ class ApiController extends \Illuminate\Routing\Controller
             throw new ResourceNotFoundException();
         }
 
-        if(method_exists($this, 'destroying')) {
+        if (method_exists($this, 'destroying')) {
             $object = call_user_func([$this, 'destroying'], $object);
         }
 
@@ -283,7 +280,7 @@ class ApiController extends \Illuminate\Routing\Controller
 
         \DB::commit();
 
-        if(method_exists($this, 'destroyed')) {
+        if (method_exists($this, 'destroyed')) {
             call_user_func([$this, 'destroyed'], $object);
         }
 
@@ -298,8 +295,8 @@ class ApiController extends \Illuminate\Routing\Controller
         // only object id, and the relation and get the results like normal index request
 
         $fields = "id," . $relation . ".limit(" . ((request()->limit) ? request()->limit : $this->defaultLimit) .
-            ")" . ((request()->offset) ?  ".offset(" . request()->offset . ")": "" )
-            . ((request()->fields) ? "{" .request()->fields . "}" : "");
+            ")" . ((request()->offset) ? ".offset(" . request()->offset . ")" : "")
+            . ((request()->fields) ? "{" . request()->fields . "}" : "");
 
         request()->fields = $fields;
 
@@ -331,23 +328,17 @@ class ApiController extends \Illuminate\Routing\Controller
 
         if ($this->isIndex()) {
             $requestClass = $this->indexRequest;
-        }
-        else if ($this->isShow()) {
+        } else if ($this->isShow()) {
             $requestClass = $this->showRequest;
-        }
-        else if ($this->isUpdate()) {
+        } else if ($this->isUpdate()) {
             $requestClass = $this->updateRequest;
-        }
-        else if ($this->isDelete()) {
+        } else if ($this->isDelete()) {
             $requestClass = $this->deleteRequest;
-        }
-        else if ($this->isStore()) {
+        } else if ($this->isStore()) {
             $requestClass = $this->storeRequest;
-        }
-        else if ($this->isRelation()) {
+        } else if ($this->isRelation()) {
             $requestClass = $this->indexRequest;
-        }
-        else {
+        } else {
             $requestClass = null;
         }
 
@@ -381,8 +372,7 @@ class ApiController extends \Illuminate\Routing\Controller
                     if ($relation["userSpecifiedFields"]) {
                         // Prefix table name so that we do not get ambiguous column errors
                         $fields = $relation["fields"];
-                    }
-                    else {
+                    } else {
                         // Add default fields, if no fields specified
                         $related = $q->getRelated();
 
@@ -400,7 +390,7 @@ class ApiController extends \Illuminate\Routing\Controller
                         $fields[] = $primaryKey;
                     }
 
-                    $fields = array_map(function($name) use($tableName) {
+                    $fields = array_map(function ($name) use ($tableName) {
                         return $tableName . "." . $name;
                     }, array_diff($fields, $appends));
 
@@ -419,19 +409,18 @@ class ApiController extends \Illuminate\Routing\Controller
                         $innerQuery->getQuery()->joins[0]->type = "right";
 
                         $outerQuery = $q->newPivotStatement();
-                        $outerQuery->from(\DB::raw("(". $innerQuery->toSql() . ") as `$tableName`"))
+                        $outerQuery->from(\DB::raw("(" . $innerQuery->toSql() . ") as `$tableName`"))
                             ->mergeBindings($innerQuery->getQuery());
 
                         $q->select($fields)
-                            ->join(\DB::raw("(" . $outerQuery->toSql() . ") as `outer_query`"), function ($join) use($q) {
-                                $join->on("outer_query." . $q->getRelatedKeyName(), "=", $q->getQualifiedRelatedPivotKeyName ());
+                            ->join(\DB::raw("(" . $outerQuery->toSql() . ") as `outer_query`"), function ($join) use ($q) {
+                                $join->on("outer_query." . $q->getRelatedKeyName(), "=", $q->getQualifiedRelatedPivotKeyName());
                                 $join->on("outer_query.whatever", "=", $q->getQualifiedForeignPivotKeyName());
                             })
                             ->setBindings(array_merge($q->getQuery()->getBindings(), $outerQuery->getBindings()))
                             ->where("rank", "<=", $relation["limit"] + $relation["offset"])
                             ->where("rank", ">", $relation["offset"]);
-                    }
-                    else {
+                    } else {
                         // We need to select foreign key so that Laravel can match to which records these
                         // need to be attached
                         if ($q instanceof BelongsTo) {
@@ -443,15 +432,13 @@ class ApiController extends \Illuminate\Routing\Controller
 
                                 $relation["limit"] = $relations[implode(".", $parts)]["limit"];
                             }
-                        }
-                        else if ($q instanceof HasOne) {
+                        } else if ($q instanceof HasOne) {
                             $fields[] = $q->getQualifiedForeignKeyName();
 
                             // This will be used to hide this foreign key field
                             // in the processAppends function later
                             $relations[$key]["foreign"] = $q->getQualifiedForeignKeyName();
-                        }
-                        else if ($q instanceof HasMany) {
+                        } else if ($q instanceof HasMany) {
                             $fields[] = $q->getQualifiedForeignKeyName();
                             $relations[$key]["foreign"] = $q->getQualifiedForeignKeyName();
 
@@ -471,10 +458,9 @@ class ApiController extends \Illuminate\Routing\Controller
                 };
             }
 
-            $this->query = call_user_func($this->model."::with", $includes);
-        }
-        else {
-            $this->query = call_user_func($this->model."::query");
+            $this->query = call_user_func($this->model . "::with", $includes);
+        } else {
+            $this->query = call_user_func($this->model . "::query");
         }
 
         return $this;
@@ -523,8 +509,7 @@ class ApiController extends \Illuminate\Routing\Controller
 
         if ($offset <= 0) {
             $skip = 0;
-        }
-        else {
+        } else {
             $skip = $offset;
         }
 
@@ -552,7 +537,7 @@ class ApiController extends \Illuminate\Routing\Controller
      */
     protected function getResults($single = false)
     {
-        $customAttributes = call_user_func($this->model."::getAppendFields");
+        $customAttributes = call_user_func($this->model . "::getAppendFields");
 
         // Laravel's $appends adds attributes always to the output. With this method,
         // we can specify which attributes are to be included
@@ -564,8 +549,7 @@ class ApiController extends \Illuminate\Routing\Controller
             if (in_array($field, $customAttributes)) {
                 $appends[] = $field;
                 unset($fields[$key]);
-            }
-            else {
+            } else {
                 // Add table name to  fields to prevent ambiguous column issues
                 $fields[$key] = $this->table . "." . $field;
             }
@@ -576,8 +560,7 @@ class ApiController extends \Illuminate\Routing\Controller
         if (!$single) {
             /** @var Collection $results */
             $results = $this->query->select($fields)->get();
-        }
-        else {
+        } else {
             /** @var Collection $results */
             $results = $this->query->select($fields)->skip(0)->take(1)->get();
 
@@ -586,7 +569,7 @@ class ApiController extends \Illuminate\Routing\Controller
             }
         }
 
-        foreach($results as $result) {
+        foreach ($results as $result) {
             $result->setAppends($appends);
         }
 
@@ -599,10 +582,9 @@ class ApiController extends \Illuminate\Routing\Controller
 
     private function processAppends($models, $parent = null)
     {
-        if (! ($models instanceof Collection)) {
+        if (!($models instanceof Collection)) {
             return $models;
-        }
-        else if ($models->count() == 0) {
+        } else if ($models->count() == 0) {
             return $models;
         }
 
@@ -621,14 +603,13 @@ class ApiController extends \Illuminate\Routing\Controller
 
                 if (isset($relations[$relationName]["foreign"])) {
                     $foreign = explode(".", $relations[$relationName]["foreign"])[1];
-                }
-                else {
+                } else {
                     $foreign = null;
                 }
 
                 foreach ($models as $model) {
                     if ($model->$key instanceof Collection) {
-                        $model->{$key}->each(function ($item, $key) use($appends, $foreign) {
+                        $model->{$key}->each(function ($item, $key) use ($appends, $foreign) {
                             $item->setAppends($appends);
 
                             // Hide the foreign key fields
@@ -638,8 +619,7 @@ class ApiController extends \Illuminate\Routing\Controller
                         });
 
                         $this->processAppends($model->$key, $key);
-                    }
-                    else if (!empty($model->$key)) {
+                    } else if (!empty($model->$key)) {
                         $model->$key->setAppends($appends);
 
                         if (!empty($foreign)) {
@@ -665,8 +645,8 @@ class ApiController extends \Illuminate\Routing\Controller
                 "paging" => [
                     "links" => [
 
-                    ]
-                ]
+                    ],
+                ],
             ];
             $limit = $this->parser->getLimit();
             $pageOffset = $this->parser->getOffset();
@@ -702,7 +682,7 @@ class ApiController extends \Illuminate\Routing\Controller
             \DB::disableQueryLog();
 
             $meta["queries"] = count($log);
-           $meta["queries_list"] = $log;
+            $meta["queries_list"] = $log;
         }
 
         return $meta;
@@ -807,14 +787,11 @@ class ApiController extends \Illuminate\Routing\Controller
     {
         if ($this->isIndex()) {
             $this->query = $this->modifyIndex($this->query);
-        }
-        else if ($this->isShow()) {
+        } else if ($this->isShow()) {
             $this->query = $this->modifyShow($this->query);
-        }
-        else if ($this->isDelete()) {
+        } else if ($this->isDelete()) {
             $this->query = $this->modifyDelete($this->query);
-        }
-        else if ($this->isUpdate()) {
+        } else if ($this->isUpdate()) {
             $this->query = $this->modifyUpdate($this->query);
         }
 
@@ -861,11 +838,13 @@ class ApiController extends \Illuminate\Routing\Controller
         return $query;
     }
 
-    protected function getQuery() {
+    protected function getQuery()
+    {
         return $this->query;
     }
 
-    protected function setQuery($query) {
+    protected function setQuery($query)
+    {
         $this->query = $query;
     }
 

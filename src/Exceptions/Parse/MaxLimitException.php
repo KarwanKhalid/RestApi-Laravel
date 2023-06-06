@@ -1,8 +1,8 @@
 <?php
-namespace karwan\restapi-laravel\Exceptions\Parse;
+namespace Karwan\RestAPI\Exceptions\Parse;
 
-use karwan\restapi-laravel\Exceptions\ApiException;
-use karwan\restapi-laravel\Exceptions\ErrorCodes;
+use Karwan\RestAPI\Exceptions\ApiException;
+use Karwan\RestAPI\Exceptions\ErrorCodes;
 
 class MaxLimitException extends ApiException
 {

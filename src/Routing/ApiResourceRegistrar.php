@@ -1,6 +1,6 @@
 <?php
 
-namespace karwan\restapi-laravel\Routing;
+namespace Karwan\RestAPI\Routing;
 
 use Illuminate\Routing\ResourceRegistrar;
 use Illuminate\Support\Str;
@@ -34,7 +34,7 @@ class ApiResourceRegistrar extends ResourceRegistrar
      */
     public function register($name, $controller, array $options = [])
     {
-        if (isset($options['parameters']) && ! isset($this->parameters)) {
+        if (isset($options['parameters']) && !isset($this->parameters)) {
             $this->parameters = $options['parameters'];
         }
 
@@ -55,7 +55,7 @@ class ApiResourceRegistrar extends ResourceRegistrar
         $defaults = $this->resourceDefaults;
 
         foreach ($this->getResourceMethods($defaults, $options) as $m) {
-            $this->{'addResource'.ucfirst($m)}($name, $base, $controller, $options);
+            $this->{'addResource' . ucfirst($m)}($name, $base, $controller, $options);
         }
     }
 
@@ -70,7 +70,7 @@ class ApiResourceRegistrar extends ResourceRegistrar
      */
     protected function addResourceRelation($name, $base, $controller, $options)
     {
-        $uri = $this->getResourceUri($name).'/{'.$base.'}'."/{relation}";
+        $uri = $this->getResourceUri($name) . '/{' . $base . '}' . "/{relation}";
 
         $action = $this->getResourceAction($name, $controller, 'relation', $options);
 

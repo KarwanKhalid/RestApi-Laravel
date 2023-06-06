@@ -3,13 +3,13 @@
     "description": "Powerful RestAPI plugin for Laravel framework",
     "type": "library",
     "require": {
-        "laravel/framework": "5.6.*|5.7.*|5.8.*|6.*|7.*|8.*|9.*"
+        "laravel/framework": "5.6.*|5.7.*|5.8.*|6.*|7.*|8.*|9.*|10.*"
     },
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "karwan\\restapi-laravel\\": "src",
-            "karwan\\restapi-laravel\\Tests\\": "tests"
+            "Karwan\\RestAPI\\": "src",
+            "Karwan\\RestAPI\\Tests\\": "tests"
         }
     },
     "authors": [

@@ -1,16 +1,17 @@
-<?php namespace karwan\restapi-laravel;
+<?php namespace Karwan\RestAPI;
 
 use Carbon\Carbon;
 use Closure;
 use DateTimeInterface;
-use karwan\restapi-laravel\Exceptions\RelatedResourceNotFoundException;
-use karwan\restapi-laravel\Exceptions\ResourceNotFoundException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Str;
+use Karwan\RestAPI\Exceptions\RelatedResourceNotFoundException;
+use Karwan\RestAPI\Exceptions\ResourceNotFoundException;
 
 class ApiModel extends Model
 {
@@ -63,7 +64,7 @@ class ApiModel extends Model
      */
     public static function getTableName()
     {
-        return (new static)->table;
+        return (new static )->table;
     }
 
     /**
@@ -73,7 +74,7 @@ class ApiModel extends Model
      */
     public static function getDateFields()
     {
-        return (new static)->dates;
+        return (new static )->dates;
     }
 
     /**
@@ -84,7 +85,7 @@ class ApiModel extends Model
      */
     public static function getAppendFields()
     {
-        return (new static)->appends;
+        return (new static )->appends;
     }
 
     /**
@@ -94,7 +95,7 @@ class ApiModel extends Model
      */
     public static function getDefaultFields()
     {
-        return (new static)->default;
+        return (new static )->default;
     }
 
     /**
@@ -104,7 +105,7 @@ class ApiModel extends Model
      */
     public static function getRelationKeyFields()
     {
-        return (new static)->relationKeys;
+        return (new static )->relationKeys;
     }
 
     /**
@@ -114,7 +115,7 @@ class ApiModel extends Model
      */
     public static function getFilterableFields()
     {
-        return (new static)->filterable;
+        return (new static )->filterable;
     }
 
     /**
@@ -127,7 +128,7 @@ class ApiModel extends Model
     {
         // Check if relation name in modal is in camel case or not
         if (config("api.relation_case", 'snakecase') === 'camelcase') {
-            return (method_exists(new static(), $relation) ?? false) || (method_exists(new static(), \Str::camel($relation)) ?? false);
+            return (method_exists(new static(), $relation) ?? false) || (method_exists(new static(), Str::camel($relation)) ?? false);
         }
         return method_exists(new static(), $relation);
     }
@@ -186,8 +187,7 @@ class ApiModel extends Model
         // Parse ISO 8061 date
         if (preg_match('/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\\+(\d{2}):(\d{2})$/', $value)) {
             return Carbon::createFromFormat('Y-m-d\TH:i:s+P', $value);
-        }
-        elseif (preg_match('/^(\d{4})-(\d{1,2})-(\d{1,2}T(\d{2}):(\d{2}):(\d{2})\\.(\d{1,3})Z)$/', $value)) {
+        } elseif (preg_match('/^(\d{4})-(\d{1,2})-(\d{1,2}T(\d{2}):(\d{2}):(\d{2})\\.(\d{1,3})Z)$/', $value)) {
             return Carbon::createFromFormat('Y-m-d\TH:i:s.uZ', $value);
         }
 
@@ -243,8 +243,7 @@ class ApiModel extends Model
             // Guarded attributes should be removed
             if (in_array($key, $excludes)) {
                 unset($attributes[$key]);
-            }
-            else if (method_exists($this, $key) && ((is_array($attribute) || is_null($attribute)))) {
+            } else if (method_exists($this, $key) && ((is_array($attribute) || is_null($attribute)))) {
                 // Its a relation
                 $this->relationAttributes[$key] = $attribute;
 
@@ -258,8 +257,7 @@ class ApiModel extends Model
                         // If key value is not set in request, we create new object
                         if (!isset($attribute[$primaryKey])) {
                             throw new RelatedResourceNotFoundException('Resource for relation "' . $key . '" not found');
-                        }
-                        else {
+                        } else {
                             $model = $relation->getRelated()->find($attribute[$primaryKey]);
 
                             if (!$model) {
@@ -295,8 +293,7 @@ class ApiModel extends Model
                     // If key value is not set in request, we create new object
                     if (!isset($relationAttribute[$primaryKey])) {
                         throw new RelatedResourceNotFoundException('Resource for relation "' . $key . '" not found');
-                    }
-                    else {
+                    } else {
                         $model = $relation->getRelated()->find($relationAttribute[$primaryKey]);
 
                         if (!$model) {
@@ -334,8 +331,7 @@ class ApiModel extends Model
                     if ($val !== null) {
                         if (!isset($val[$primaryKey])) {
                             throw new RelatedResourceNotFoundException('Resource for relation "' . $key . '" not found');
-                        }
-                        else {
+                        } else {
                             /** @var Model $model */
                             $model = $relation->getRelated()->find($val[$primaryKey]);
 
@@ -350,9 +346,7 @@ class ApiModel extends Model
                         }
                     }
                 }
-            }
-
-            else if ($relation instanceof BelongsToMany) {
+            } else if ($relation instanceof BelongsToMany) {
                 $relatedIds = [];
 
                 // Value is an array of related models
@@ -360,8 +354,7 @@ class ApiModel extends Model
                     if ($val !== null) {
                         if (!isset($val[$primaryKey])) {
                             throw new RelatedResourceNotFoundException('Resource for relation "' . $key . '" not found');
-                        }
-                        else {
+                        } else {
                             /** @var Model $model */
                             $model = $relation->getRelated()->find($val[$primaryKey]);
 
@@ -373,26 +366,25 @@ class ApiModel extends Model
                     }
 
                     if ($val !== null) {
-                       if(isset($val['pivot'])) {
+                        if (isset($val['pivot'])) {
                             // We have additional fields other than primary key
                             // that need to be saved to pivot table
                             /*
-                                [
-                                    {
-                                        "id": 12, // Primary key
-                                        "pivot": {
-                                            "count": 8 // Pivot table column
-                                        }
-                                    }
-                                ]
+                            [
+                            {
+                            "id": 12, // Primary key
+                            "pivot": {
+                            "count": 8 // Pivot table column
+                            }
+                            }
+                            ]
                              */
                             $relatedIds[$model->getKey()] = $val['pivot'];
-                       }
-                       else {
+                        } else {
                             // We just have ids
                             $relatedIds[] = $model->getKey();
-                       }
-                   }
+                        }
+                    }
                 }
 
                 $relation->sync($relatedIds);

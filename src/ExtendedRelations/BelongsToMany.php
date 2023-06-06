@@ -1,11 +1,13 @@
 <?php
 
-namespace karwan\restapi-laravel\ExtendedRelations;
+namespace Karwan\RestAPI\ExtendedRelations;
+
 use Illuminate\Database\Eloquent\Relations\BelongsToMany as LaravelBelongsToMany;
 
 class BelongsToMany extends LaravelBelongsToMany
 {
-    public function getRelatedKeyName() {
+    public function getRelatedKeyName()
+    {
         return $this->relatedKey ?: 'id';
     }
 }

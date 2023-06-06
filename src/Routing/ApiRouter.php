@@ -1,14 +1,12 @@
 <?php
 
-namespace karwan\restapi-laravel\Routing;
+namespace Karwan\RestAPI\Routing;
 
 use Closure;
-use karwan\restapi-laravel\Exceptions\ApiException;
-use karwan\restapi-laravel\Middleware\ApiMiddleware;
 use Illuminate\Contracts\Container\Container;
-use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Routing\ResourceRegistrar;
 use Illuminate\Routing\Router;
+use Karwan\RestAPI\Middleware\ApiMiddleware;
 
 class ApiRouter extends Router
 {
@@ -25,10 +23,9 @@ class ApiRouter extends Router
      */
     public function resource($name, $controller, array $options = [])
     {
-        if ($this->container && $this->container->bound('karwan\restapi-laravel\Routing\ApiResourceRegistrar')) {
-            $registrar = $this->container->make('karwan\restapi-laravel\Routing\ApiResourceRegistrar');
-        }
-        else {
+        if ($this->container && $this->container->bound('Karwan\RestAPI\Routing\ApiResourceRegistrar')) {
+            $registrar = $this->container->make('Karwan\RestAPI\Routing\ApiResourceRegistrar');
+        } else {
             $registrar = new ResourceRegistrar($this);
         }
 
@@ -37,8 +34,7 @@ class ApiRouter extends Router
 
     public function version($versions, Closure $callback)
     {
-        if (is_string($versions))
-        {
+        if (is_string($versions)) {
             $versions = [$versions];
         }
 
@@ -65,16 +61,13 @@ class ApiRouter extends Router
         if (empty($this->versions)) {
             if (($default = config("api.default_version")) !== null) {
                 $versions = [$default];
-            }
-            else {
+            } else {
                 $versions = [null];
             }
 
-        }
-        else {
+        } else {
             $versions = $this->versions;
         }
-
 
         // Add version prefix
         foreach ($versions as $version) {
@@ -94,7 +87,7 @@ class ApiRouter extends Router
 //             $routes->add($route);
 
             // Options route
-           // $route = $this->createRoute(['OPTIONS'], $uri, ['uses' => '\karwan\restapi-laravel\Routing\ApiRouter@returnRoute']);
+            // $route = $this->createRoute(['OPTIONS'], $uri, ['uses' => '\Karwan\RestAPI\Routing\ApiRouter@returnRoute']);
 
 //             $route->middleware(ApiMiddleware::class);
 

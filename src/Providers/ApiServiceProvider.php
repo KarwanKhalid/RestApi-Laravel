@@ -1,16 +1,13 @@
 <?php
 
-namespace karwan\restapi-laravel\Providers;
+namespace Karwan\RestAPI\Providers;
 
-use karwan\restapi-laravel\Handlers\ApiExceptionHandler;
-use karwan\restapi-laravel\Routing\ApiResourceRegistrar;
-use karwan\restapi-laravel\Routing\ApiRouter;
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
-use Illuminate\Routing\RouteCollection;
-use Illuminate\Routing\Router;
-use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\ServiceProvider;
+use Karwan\RestAPI\Handlers\ApiExceptionHandler;
+use Karwan\RestAPI\Routing\ApiResourceRegistrar;
+use Karwan\RestAPI\Routing\ApiRouter;
 
 class ApiServiceProvider extends ServiceProvider
 {
@@ -18,7 +15,7 @@ class ApiServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../api.php' => config_path("api.php"),
+            __DIR__ . '/../api.php' => config_path("api.php"),
         ]);
     }
 
@@ -33,7 +30,7 @@ class ApiServiceProvider extends ServiceProvider
         $this->registerExceptionHandler();
 
         $this->mergeConfigFrom(
-            __DIR__.'/../api.php', 'api'
+            __DIR__ . '/../api.php', 'api'
         );
     }
 

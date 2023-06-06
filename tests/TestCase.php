@@ -1,24 +1,24 @@
 <?php
 
-namespace karwan\restapi-laravel\Tests;
+namespace Karwan\RestAPI\Tests;
 
-use karwan\restapi-laravel\Facades\ApiRoute;
-use karwan\restapi-laravel\Routing\ApiRouter;
-use karwan\restapi-laravel\Tests\Controllers\CommentController;
-use karwan\restapi-laravel\Tests\Controllers\PostController;
-use karwan\restapi-laravel\Tests\Controllers\UserController;
-use karwan\restapi-laravel\Tests\Models\DummyComment;
-use karwan\restapi-laravel\Tests\Models\DummyPhone;
-use karwan\restapi-laravel\Tests\Models\DummyPost;
-use karwan\restapi-laravel\Tests\Models\DummyUser;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Karwan\RestAPI\Routing\ApiRouter;
+use Karwan\RestAPI\Tests\Controllers\CommentController;
+use Karwan\RestAPI\Tests\Controllers\PostController;
+use Karwan\RestAPI\Tests\Controllers\UserController;
+use Karwan\RestAPI\Tests\Models\DummyComment;
+use Karwan\RestAPI\Tests\Models\DummyPhone;
+use Karwan\RestAPI\Tests\Models\DummyPost;
+use Karwan\RestAPI\Tests\Models\DummyUser;
 
 /**
  * Class TestCase
- * @package karwan\restapi-laravel\Tests
+ * @package Karwan\RestAPI\Tests
  */
-class  TestCase extends \Illuminate\Foundation\Testing\TestCase
+class TestCase extends \Illuminate\Foundation\Testing\TestCase
+
 {
     /**
      * The base URL to use while testing the application.
@@ -53,7 +53,7 @@ class  TestCase extends \Illuminate\Foundation\Testing\TestCase
 
     public function createApplication()
     {
-        $app = require __DIR__.'/../../bootstrap/app.php';
+        $app = require __DIR__ . '/../../bootstrap/app.php';
 
         $app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
@@ -73,12 +73,11 @@ class  TestCase extends \Illuminate\Foundation\Testing\TestCase
             base_path() . '/laravel-rest-api/tests/Factories');
         \DB::beginTransaction();
 
-        for($i = 0; $i < 10; $i++)
-        {
+        for ($i = 0; $i < 10; $i++) {
             $user = $factory->of(DummyUser::class)->create();
             $factory->of(DummyPhone::class)->create(
                 [
-                    'user_id' => $user->id
+                    'user_id' => $user->id,
                 ]
             );
 
@@ -160,4 +159,3 @@ class  TestCase extends \Illuminate\Foundation\Testing\TestCase
     }
 
 }
-

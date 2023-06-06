@@ -1,10 +1,10 @@
 <?php
 
-namespace karwan\restapi-laravel\Exceptions;
+namespace Karwan\RestAPI\Exceptions;
 
 use Illuminate\Contracts\Support\Jsonable;
 
-class ApiException extends \Exception implements \JsonSerializable, Jsonable
+class ApiException extends \Exception implements \JsonSerializable , Jsonable
 {
     /**
      * Response status code
@@ -47,8 +47,7 @@ class ApiException extends \Exception implements \JsonSerializable, Jsonable
 
         if ($message == null) {
             parent::__construct($this->message, $this->code, $previous);
-        }
-        else {
+        } else {
             parent::__construct($message, $this->code, $previous);
         }
     }
@@ -90,8 +89,8 @@ class ApiException extends \Exception implements \JsonSerializable, Jsonable
         $jsonArray = [
             "error" => [
                 "message" => $this->getMessage(),
-                "code" => $this->getCode()
-            ]
+                "code" => $this->getCode(),
+            ],
         ];
 
         if (isset($this->details)) {
@@ -100,7 +99,7 @@ class ApiException extends \Exception implements \JsonSerializable, Jsonable
 
         if (isset($this->innerError)) {
             $jsonArray["error"]["innererror"] = [
-                "code" => $this->innerError
+                "code" => $this->innerError,
             ];
         }
 

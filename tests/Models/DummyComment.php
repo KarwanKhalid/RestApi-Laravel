@@ -1,10 +1,8 @@
 <?php
 
-namespace karwan\restapi-laravel\Tests\Models;
+namespace Karwan\RestAPI\Tests\Models;
 
-use karwan\restapi-laravel\ApiModel;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Karwan\RestAPI\ApiModel;
 
 class DummyComment extends ApiModel
 {
@@ -24,10 +22,9 @@ class DummyComment extends ApiModel
         'comments', 'user_id', 'post_id',
     ];
 
-
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     /**
@@ -35,6 +32,6 @@ class DummyComment extends ApiModel
      */
     public function post()
     {
-        return $this->belongsTo('karwan\restapi-laravel\Tests\Models\DummyPost');
+        return $this->belongsTo('Karwan\RestAPI\Tests\Models\DummyPost');
     }
 }

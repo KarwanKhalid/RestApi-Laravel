@@ -1,19 +1,18 @@
 <?php
 
-namespace karwan\restapi-laravel\Handlers;
+namespace Karwan\RestAPI\Handlers;
 
 use App\Exceptions\Handler;
-use karwan\restapi-laravel\ApiResponse;
-use karwan\restapi-laravel\Exceptions\ApiException;
-use karwan\restapi-laravel\Exceptions\Parse\UnknownFieldException;
-use karwan\restapi-laravel\Exceptions\UnauthenticatedException;
-use karwan\restapi-laravel\Exceptions\UnauthenticationException;
-use karwan\restapi-laravel\Exceptions\UnauthorizedException;
-use karwan\restapi-laravel\Exceptions\ValidationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Karwan\RestAPI\ApiResponse;
+use Karwan\RestAPI\Exceptions\ApiException;
+use Karwan\RestAPI\Exceptions\Parse\UnknownFieldException;
+use Karwan\RestAPI\Exceptions\UnauthenticationException;
+use Karwan\RestAPI\Exceptions\UnauthorizedException;
+use Karwan\RestAPI\Exceptions\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -36,7 +35,7 @@ class ApiExceptionHandler extends Handler
                 return ApiResponse::exception(new UnauthenticationException());
             }
 
-            if ($e instanceof HttpResponseException || $e instanceof \Illuminate\Validation\ValidationException) {
+            if ($e instanceof HttpResponseException || $e instanceof \Illuminate\Validation\ValidationException ) {
                 if ($e->status == 403) {
                     return ApiResponse::exception(new UnauthorizedException());
                 }
@@ -45,13 +44,13 @@ class ApiExceptionHandler extends Handler
 
             if ($e instanceof NotFoundHttpException) {
                 return ApiResponse::exception(new ApiException('This api endpoint does not exist', null, 404, 404, 2005, [
-                    'url' => request()->url()
+                    'url' => request()->url(),
                 ]));
             }
 
             if ($e instanceof ModelNotFoundException) {
                 return ApiResponse::exception(new ApiException('Requested resource not found', null, 404, 404, null, [
-                    'url' => request()->url()
+                    'url' => request()->url(),
                 ]));
             }
 
@@ -87,5 +86,3 @@ class ApiExceptionHandler extends Handler
     }
 
 }
-
-

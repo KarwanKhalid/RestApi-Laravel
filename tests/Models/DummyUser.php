@@ -1,10 +1,8 @@
 <?php
 
-namespace karwan\restapi-laravel\Tests\Models;
+namespace Karwan\RestAPI\Tests\Models;
 
-use karwan\restapi-laravel\ApiModel;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Karwan\RestAPI\ApiModel;
 
 class DummyUser extends ApiModel
 {
@@ -24,10 +22,9 @@ class DummyUser extends ApiModel
         'name', 'email', 'age',
     ];
 
-
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     /**
@@ -35,7 +32,7 @@ class DummyUser extends ApiModel
      */
     public function phone()
     {
-        return $this->hasOne('karwan\restapi-laravel\Tests\Models\DummyPhone', 'user_id', 'id');
+        return $this->hasOne('Karwan\RestAPI\Tests\Models\DummyPhone', 'user_id', 'id');
     }
 
     /**
@@ -43,7 +40,7 @@ class DummyUser extends ApiModel
      */
     public function posts()
     {
-        return $this->hasMany('karwan\restapi-laravel\Tests\Models\DummyPost', 'user_id', 'id');
+        return $this->hasMany('Karwan\RestAPI\Tests\Models\DummyPost', 'user_id', 'id');
     }
 
     /**
@@ -51,6 +48,6 @@ class DummyUser extends ApiModel
      */
     public function comments()
     {
-        return $this->hasMany('karwan\restapi-laravel\Tests\Models\DummyComment', 'user_id', 'id');
+        return $this->hasMany('Karwan\RestAPI\Tests\Models\DummyComment', 'user_id', 'id');
     }
 }

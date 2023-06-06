@@ -1,11 +1,11 @@
 <?php
 
-namespace karwan\restapi-laravel\Exceptions;
+namespace Karwan\RestAPI\Exceptions;
 
 class ErrorCodes
 {
     const REQUEST_PARSE_EXCEPTION = 100;
-    const UNKNOWN_EXCEPTION  = 1;
+    const UNKNOWN_EXCEPTION = 1;
     const UNAUTHENTICATION_EXCEPTION = 401;
     const UNAUTHORIZED_EXCEPTION = 403;
     const VALIDATION_EXCEPTION = 422;

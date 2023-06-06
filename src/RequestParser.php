@@ -1,16 +1,16 @@
 <?php
 
-namespace karwan\restapi-laravel;
+namespace Karwan\RestAPI;
 
-use karwan\restapi-laravel\Exceptions\Parse\InvalidLimitException;
-use karwan\restapi-laravel\Exceptions\Parse\InvalidFilterDefinitionException;
-use karwan\restapi-laravel\Exceptions\Parse\InvalidOrderingDefinitionException;
-use karwan\restapi-laravel\Exceptions\Parse\MaxLimitException;
-use karwan\restapi-laravel\Exceptions\Parse\NotAllowedToFilterOnThisFieldException;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
+use Karwan\RestAPI\Exceptions\Parse\InvalidFilterDefinitionException;
+use Karwan\RestAPI\Exceptions\Parse\InvalidLimitException;
+use Karwan\RestAPI\Exceptions\Parse\InvalidOrderingDefinitionException;
+use Karwan\RestAPI\Exceptions\Parse\MaxLimitException;
+use Karwan\RestAPI\Exceptions\Parse\NotAllowedToFilterOnThisFieldException;
 
 class RequestParser
 {
@@ -201,22 +201,18 @@ class RequestParser
         if (request()->limit) {
             if (request()->limit <= 0) {
                 throw new InvalidLimitException();
-            }
-            else if (request()->limit > config("api.maxLimit")) {
+            } else if (request()->limit > config("api.maxLimit")) {
                 throw new MaxLimitException();
-            }
-            else {
+            } else {
                 $this->limit = request()->limit;
             }
-        }
-        else {
+        } else {
             $this->limit = config("api.defaultLimit");
         }
 
         if (request()->offset) {
             $this->offset = request()->offset;
-        }
-        else {
+        } else {
             $this->offset = 0;
         }
 
@@ -234,10 +230,9 @@ class RequestParser
     {
         if (request()->fields) {
             $this->parseFields(request()->fields);
-        }
-        else {
+        } else {
             // Else, by default, we only return default set of visible fields
-            $fields = call_user_func($this->model."::getDefaultFields");
+            $fields = call_user_func($this->model . "::getDefaultFields");
 
             // We parse the default fields in same way as above so that, if
             // relations are included in default fields, they also get included
@@ -283,11 +278,11 @@ class RequestParser
                 $where = preg_replace(
                     [
                         "/ne[\\s]+null/i",
-                        "/eq[\\s]+null/i"
+                        "/eq[\\s]+null/i",
                     ],
                     [
                         "is not null",
-                        "is null"
+                        "is null",
                     ],
                     $where
                 );
@@ -301,7 +296,7 @@ class RequestParser
                         "/[\\s]+ge[\\s]+/i",
                         "/[\\s]+lt[\\s]+/i",
                         "/[\\s]+le[\\s]+/i",
-                        "/[\\s]+lk[\\s]+/i"
+                        "/[\\s]+lk[\\s]+/i",
                     ],
                     [
                         " = ",
@@ -310,14 +305,13 @@ class RequestParser
                         " >= ",
                         " < ",
                         " <= ",
-                        " LIKE "
+                        " LIKE ",
                     ],
                     $where
                 );
 
                 $this->filters = $where;
-            }
-            else {
+            } else {
                 throw new InvalidFilterDefinitionException();
             }
         }
@@ -328,7 +322,6 @@ class RequestParser
         if (request()->order) {
             if (preg_match(RequestParser::ORDER_FILTER, request()->order) === 1) {
                 $order = request()->order;
-
 
                 // eg :  user.name asc, year desc, age,month
                 $order = preg_replace(
@@ -344,8 +337,7 @@ class RequestParser
                 );
 
                 $this->order = $order;
-            }
-            else {
+            } else {
                 throw new InvalidOrderingDefinitionException();
             }
         }
@@ -383,8 +375,7 @@ class RequestParser
                         $subFields = explode(",", $parts[7][0]);
                         // This indicates if user specified fields for relation or not
                         $userSpecifiedFields = true;
-                    }
-                    else {
+                    } else {
                         $subFields = [];
                         $userSpecifiedFields = false;
                     }
@@ -392,7 +383,7 @@ class RequestParser
                     $fieldName = str_replace(":", ".", $fieldName);
 
                     // Check if relation name in modal is in camel case then convert relation name in camel case
-                    if(config("api.relation_case", 'snakecase') === 'camelcase'){
+                    if (config("api.relation_case", 'snakecase') === 'camelcase') {
                         $fieldName = \Str::camel($fieldName);
                     }
 
@@ -402,10 +393,9 @@ class RequestParser
                             "offset" => $offset,
                             "order" => $order,
                             "fields" => $subFields,
-                            "userSpecifiedFields" => $userSpecifiedFields
+                            "userSpecifiedFields" => $userSpecifiedFields,
                         ];
-                    }
-                    else {
+                    } else {
                         $this->relations[$fieldName]["limit"] = $limit;
                         $this->relations[$fieldName]["offset"] = $offset;
                         $this->relations[$fieldName]["order"] = $order;
@@ -423,7 +413,7 @@ class RequestParser
                         $relation = null;
 
                         foreach ($relationNameParts as $rp) {
-                            $relation = call_user_func([ new $model(), $rp]);
+                            $relation = call_user_func([new $model(), $rp]);
                             $model = $relation->getRelated();
                         }
 
@@ -432,8 +422,7 @@ class RequestParser
 
                         if ($relation instanceof BelongsTo) {
                             $singular = $relation->getForeignKeyName();
-                        }
-                        else if ($relation instanceof HasOne || $relation instanceof HasMany) {
+                        } else if ($relation instanceof HasOne || $relation instanceof HasMany) {
                             $singular = $relation->getForeignKeyName();
                         }
 
@@ -445,8 +434,7 @@ class RequestParser
                         if ($relation instanceof HasOne || $relation instanceof HasMany) {
                             // For hasMany and HasOne, the foreign key is in current relation table, not in parent
                             $this->relations[$fieldName]["fields"][] = $singular;
-                        }
-                        else {
+                        } else {
                             // The parent might already been set because we cannot rely on order
                             // in which user sends relations in request
                             if (!isset($this->relations[$parent])) {
@@ -455,10 +443,9 @@ class RequestParser
                                     "offset" => 0,
                                     "order" => "chronological",
                                     "fields" => isset($singular) ? [$singular] : [],
-                                    "userSpecifiedFields" => true
+                                    "userSpecifiedFields" => true,
                                 ];
-                            }
-                            else {
+                            } else {
                                 if (isset($singular)) {
                                     $this->relations[$parent]["fields"][] = $singular;
                                 }
@@ -467,19 +454,16 @@ class RequestParser
 
                         if ($relation instanceof BelongsTo) {
                             $this->relations[$fieldName]["limit"] = max($this->relations[$fieldName]["limit"], $this->relations[$parent]["limit"]);
-                        }
-                        else if ($relation instanceof HasMany) {
+                        } else if ($relation instanceof HasMany) {
                             $this->relations[$fieldName]["limit"] = $this->relations[$fieldName]["limit"] * $this->relations[$parent]["limit"];
                         }
-                    }
-                    else {
+                    } else {
 
                         $relation = call_user_func([new $this->model(), $fieldName]);
 
                         if ($relation instanceof HasOne) {
                             $keyField = explode(".", $relation->getQualifiedParentKeyName())[1];
-                        }
-                        else if ($relation instanceof BelongsTo) {
+                        } else if ($relation instanceof BelongsTo) {
                             $keyField = explode(".", $relation->getQualifiedForeignKeyName())[1];
                         }
 
@@ -489,15 +473,13 @@ class RequestParser
 
                         if ($relation instanceof BelongsTo) {
                             $this->relations[$fieldName]["limit"] = max($this->relations[$fieldName]["limit"], $this->limit);
-                        }
-                        else if ($relation instanceof HasMany) {
+                        } else if ($relation instanceof HasMany) {
                             // Commented out for third level hasmany limit
-                           // $this->relations[$fieldName]["limit"] = $this->relations[$fieldName]["limit"] * $this->limit;
+                            // $this->relations[$fieldName]["limit"] = $this->relations[$fieldName]["limit"] * $this->limit;
                         }
                     }
 
-                }
-                else {
+                } else {
                     // Else, its a normal field
                     $this->fields[] = $fieldName;
                 }
@@ -510,7 +492,7 @@ class RequestParser
      */
     private function loadTableName()
     {
-        $this->table = call_user_func($this->model."::getTableName");
+        $this->table = call_user_func($this->model . "::getTableName");
     }
 
 }

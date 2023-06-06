@@ -1,10 +1,8 @@
 <?php
 
-namespace karwan\restapi-laravel\Tests\Models;
+namespace Karwan\RestAPI\Tests\Models;
 
-use karwan\restapi-laravel\ApiModel;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Karwan\RestAPI\ApiModel;
 
 class DummyPhone extends ApiModel
 {
@@ -17,11 +15,11 @@ class DummyPhone extends ApiModel
      * @var array
      */
     protected $fillable = [
-        'name', 'modal_no','user_id',
+        'name', 'modal_no', 'user_id',
     ];
 
     protected $dates = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 }
